@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adaptif Yapılacaklar Listesi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <style>
+
+        body{
+
+            overflow: hidden;
+            height: 100%;
+            width: 100%;
+        }
+
+        @media screen and (max-width: 768px){
+  ::-webkit-scrollbar {
+      -webkit-appearance:textarea,textfield;
+  }
+}
+
+       
+        .buttonWithIcon{
+            
+           
+            width: 35px;
+            height: 35px;
+           
+            
+        }
+
+        .buttonWithIcon:hover{
+
+            border: 2px solid;
+            border-radius: 10px;
+            border-left-color: #00adad;
+            border-top-color: #00adad;
+            border-bottom-color: #00adad;
+            border-right-color: #00adad;
+            width: 35px;
+            height: 35px;
+        }
+      
+        .gridItem{
+
+            border: 2px solid rgba(128, 128, 128, 0.35);
+            width:1px;
+            height: 1px;
+        }
+
+       
+
+        #grid {
+            
+            
+            display: grid;
+            grid-template-columns: repeat(22,64px);
+            grid-template-rows: repeat(21,64px);
+            flex-direction:column;
+            width: 2000px;
+            height: 4500px;
+            background-color: black;
+           
+
+
+
+            position: absolute;
+            top: 0px;
+            left: 0%;
+            
+        }
+
+        #contentHolder {
+            
+            border: 0px solid green;
+            flex-direction:column;
+            width: 73%;
+            height: 85%;
+            position: absolute;
+            top: 70px;
+            right: 0px;
+            overflow: auto;
+            
+        }
+
+
+       
+    </style>
+    <link rel="stylesheet" href="titlestyle.css">
+    <link rel="stylesheet" href="toolbar.css">
+    <link rel="stylesheet" href="contentStyle.css">
+</head>
+<body>
+
+
+
+
+<div id="grid"></div>
+
+<div id="contentHolder">
+</div>
+
+
+<div id="title">
+
+    <!-- Name Of the Project -->
+    <div id="projectname_div">
+
+        <p id="projectname" contenteditable=true>Yeni Proje</p>
+
+    </div>
+    
+    
+    <input type="file" onchange="loadSave(this.files[0])" id = "text-file" style="position: absolute;display: none;">
+    
+    <div id="buttonHolder">
+
+        <div class="buttonWithIcon" name="Yükle"  style=" margin-left: 5px;width:47px; border-right: 2px solid #006363;"  onclick="document.getElementById('text-file').click()"><p style="color: white;">Yükle</p></div>
+        <div class="buttonWithIcon" name="Kaydet"  style="margin-left: 7px;"  onclick="Save()"><p style="color: white;">Kaydet</p></div>
+
+    </div>
+
+   
+    
+    <script>
+
+        document.querySelectorAll('.buttonWithIcon').forEach(buttonElement => {
+
+            buttonElement.addEventListener('mouseenter', function() {
+
+                //console.log(this.getAttribute("name"));
+                this.parentNode.parentNode.childNodes[1].textContent = this.getAttribute("name");
+
+            });
+
+            buttonElement.addEventListener('mouseleave', function() {
+
+                //console.log(this.getAttribute("name"));
+                this.parentNode.parentNode.childNodes[1].textContent = this.parentNode.parentNode.getAttribute("name");
+
+            });
+            
+
+        });
+    </script>
+     
+   
+    <!-- <p id="mousepostext" style="color: aliceblue;margin-top: -36px;margin-left: 50%;">Mouse Posisiton: </p>
+     -->
+   
+
+</div>
+
+<div id="toolbarwindow">
+
+    <input style="display: none;" id='imageInput' onchange='createImage(this.files[0],0,0)' type='file'accept='image'>
+
+    <div id="buttonHolder"> 
+
+        <div class="buttonWithIcon" title="Metin oluştur" name="Metin" style=" margin-left: 3px;border-right: 2px solid #006363;"  onclick="createText( `Metin Alanı ${index}`,0 ,0,'')">  <img style="width: 98%;height: 98%;" src="Icons/textIcon.png" alt=""></div>
+        <div class="buttonWithIcon" title="Video oluştur" name="Video" style=" border-right: 2px solid #006363;" onclick="createVideo(`Video ${index}`,0,0)">  <img style="width: 98%;height: 98%;" src="Icons/videoIcon.png" alt=""></div>
+        <div class="buttonWithIcon" title="Resim oluştur" name="Resim" style="margin-right: 5px;"  onclick="document.getElementById('imageInput').click()">  <img style="width: 98%;height: 98%;" src="Icons/imageIcon.png" alt=""></div>
+        <div class="buttonWithIcon" title="Yapılacaklar Listesi Oluştur" name="Resim" style="margin-right: 5px;"  onclick="createToDoList(0,0,'')">  <img style="width: 98%;height: 98%;" src="Icons/checklist.png" alt=""></div>
+    </div>
+
+</div>
+
+
+<script>
+    const grid = document.getElementById('grid');
+    const column_amount = 21*21;
+    
+    for(let i = 0; i < column_amount; i++) {
+
+        grid.innerHTML += "<div class='gridItem'></div>";
+
+
+    }
+
+</script>
+
+
+
+
+<script src="Codes/Save&Load.js"></script>
+
+<script src="Codes/eventHandler.js"></script>
+
+<script src="Codes/contentCreator.js">
+</script>
+
+
+
+
+
+
+<script src="Codes/TextEditor.js"></script>
+
+</body>
+</html>
